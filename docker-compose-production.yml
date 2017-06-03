@@ -1,0 +1,23 @@
+# https://docs.docker.com/compose/compose-file/
+version: "3"
+services:
+  web:
+    build:
+      context: ./node_docker
+      dockerfile: Dockerfile-production
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - webnet
+networks:
+  webnet:

@@ -1,0 +1,24 @@
+# https://docs.docker.com/compose/compose-file/
+version: "3"
+services:
+  web:
+    build: ./node_docker
+    ports:
+      - "8080:80"
+      - "9229:9229"
+    volumes:
+      - ./node_docker:/app
+    networks:
+      - webnet
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - webnet
+networks:
+  webnet:
